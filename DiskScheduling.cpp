@@ -1,8 +1,17 @@
 #include <iostream>
 #include <stdio.h>
 #include <algorithm>
+#include <climits>
 using namespace std;
-int choice,m,n,x,start,i,j,pos,min;
+int choice,m,n,x,start,pos,min,beta;
+int absolute(int a,int b)
+{   int c;
+    c=a-b;
+    if(c<0)
+        return -c;
+    else
+        return c;
+}
 
 void selectBest(int a[]) {
   int b[n];
@@ -42,21 +51,33 @@ void selectBest(int a[]) {
       cout<<"look"<<" "<<"c-look"<<" "<<"sstf";
   }
   else {
-    
-
+    float overhead = (float) (m - (b[n-1] - b[0])) / beta;
+    int i;
+    for(i = 0; b[i] < start; i++);
+    int p1 = b[i];
+    int m1 = b[i-1];
+    int nearestEnd;
+    int lookoverhead;
+    if((start-b[0]) < (b[n-1]-start)) {
+      nearestEnd = b[0];
+      lookoverhead = abs(nearestEnd - p1);
+    }
+    else {
+      nearestEnd = b[n-1];
+      lookoverhead = abs(nearestEnd - m1);
+    }
+    if(lookoverhead >= overhead) {
+        cout<"c-look";
+    }
+    else {
+      cout<<"look";
+    }
   }
   
    
 }
 
-int absolute(int a,int b)
-{   int c;
-    c=a-b;
-    if(c<0)
-        return -c;
-    else
-        return c;
-}
+
 
 
 int main()
@@ -68,8 +89,11 @@ int main()
      scanf("%d",&start);
      printf("\nEnter the number of requests :");
      scanf("%d",&n);
+     printf("\nEnter the value of beta :");
+     scanf("%d",&beta);
      int a[n];
      printf("\nEnter the request queue :");
+     int i;
      for(i=0;i<n;i++)
      {            
       scanf("%d",&a[i]);
